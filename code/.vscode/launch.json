@@ -1,0 +1,95 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Train",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "run.py",
+            "console": "integratedTerminal",
+            "args": [
+                //"--pretrained_model_path=./default_attention_16/boundary.params",
+                "--output_file_name=boundary.params",
+                "--raw_data_dir=../images/",
+                "--label_data_dir=../segm/",
+                "--epochs_before_validate=1",
+                "--fit_width",
+                "--train_batch_size=4",
+                "--num_train_epochs=3",
+                "--learning_rate=5e-3",
+                "--output_dir=./random/",
+                "--mixed_precision=no",
+                "--checkpointing_steps=179",
+                "--gradient_accumulation_steps=16",
+                "--model_bottleneck=default",
+                "--model_norm=GroupNorm",
+                //"--upgrade_bottleneck=attention",
+                //"--resume_from_checkpoint=latest",
+                //"--checkpoint_to_output"
+            ],
+            "justMyCode": false
+        },
+        {
+            "name": "Test Reverse",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "test.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--pretrained_model_path=./unet/output.ft.params",
+                "--raw_data_dir=../images/",
+                "--label_data_dir=../segm/",
+                "--output_dir=./unused/",
+                "--fit_width",
+                "--mixed_precision=no",
+                "--model_bottleneck=attention",
+                "--model_norm=GroupNorm",
+                "--reverse_index=24",
+                "--reverse_steps=100",
+                "--reverse_log_frequency=20",
+                "--reverse_lr=1e-3",
+                "--reverse_norm_scale=1e-6",
+                "--reverse_path=./reverse/"
+            ],
+            "justMyCode": false
+        },
+        {
+            "name": "Test Stats",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "test.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--pretrained_model_path=./unet/output.ft.params",
+                "--score_file_name=final.raw.csv",
+                "--prediction_file_name=final.prediction.csv",
+                "--raw_data_dir=../images/",
+                "--label_data_dir=../segm/",
+                "--fit_width",
+                "--output_dir=./post_process_training/",
+                "--mixed_precision=no",
+                "--model_bottleneck=attention",
+                "--model_norm=GroupNorm"
+            ],
+            "justMyCode": false
+        },
+        {
+            "name": "Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": [],
+            "justMyCode": false
+        },
+        {
+            "name": "Current Module",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "${fileBasenameNoExtension}",
+            "args": [
+            ]
+        }
+
+    ]
+}
